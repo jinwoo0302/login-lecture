@@ -1,7 +1,7 @@
 "use strict";
 
 const { createLogger, transports, format } = require("winston");
-const { combine, timestamp, printf, label,  simple, colorize } = format;
+const { combine, timestamp, printf, label, simple, colorize } = format;
 
 const printFormat = printf(({ timestamp, label, level, message }) => {
     return `${timestamp} [${label}] ${level}: ${message}`;
@@ -45,5 +45,8 @@ if (process.env.NODE_ENV !== "production") {
     logger.add(opts.console);
 };
 
+logger.stream={
+    write: (message) => logger.info(message)
+};
 
 module.exports = logger;
